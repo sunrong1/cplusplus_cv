@@ -1,0 +1,2 @@
+Processed 70 images in 12252 milliseconds.
+Processed 70 images in 12086 milliseconds.
