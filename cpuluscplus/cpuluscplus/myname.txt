@@ -1,10 +1,2 @@
-../../../data/INRIA/INRIAPerson/Train/pos/crop001815.png
-../../../data/INRIA/INRIAPerson/Test/pos/crop_000001.png
-../../../data/INRIA/INRIAPerson/Test/pos/crop_000002.png
-../../../data/INRIA/INRIAPerson/Test/pos/crop_000003.png
-../../../data/INRIA/INRIAPerson/Test/pos/crop_000004.png
-../../../data/INRIA/INRIAPerson/Test/pos/crop_000005.png
-../../../data/INRIA/INRIAPerson/Test/pos/crop_000006.png
-../../../data/INRIA/INRIAPerson/Test/pos/crop_000007.png
-../../../data/INRIA/INRIAPerson/Test/pos/crop_000008.png
-../../../data/INRIA/INRIAPerson/Test/pos/crop_000008.png
+1 2 3 4
+5 6 7 8

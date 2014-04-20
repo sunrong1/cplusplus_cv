@@ -20,7 +20,7 @@ int main()
 	cout<<mat_b<<endl;
 	cout<<mat_a.depth()<<","<<mat_a.channels()<<endl;
 	//typedef Point2i Point;
-	Point2i point2_start(1,2);
+	Point2i point2_start(0,0);
 	Point2i point2_weidth_h(200,300);
 	Point2i point2_weidth_hr(300,200);
 	Point3f point3_start(10,20,30);
@@ -48,6 +48,8 @@ int main()
 	rectangle(img_a,rect_b.tl(),rect_b.br(),sb,3); 
 	rectangle(img_a,rect_c.tl(),rect_c.br(),sc,3); 
 	imshow("first image",img_a);
+	cout<<"image 尺寸："<<img_a.rows<<":"<<img_a.cols;
+	cout<<"面积："<<rect_a.area()<<endl;//返回矩形的面积
 	waitKey();
 
 	/*Matx 小矩阵
@@ -68,5 +70,14 @@ int main()
 	*/
 	Vec2i v2i(1,20);
 	cout<<v2i<<endl;
+
+	for (int i=0;i<100;++i)
+	{
+		int num=rand()%100;//产生0～99的随机数
+	//	cout<<num<<endl;
+	}
+
+
+	
 	return 0;
 }

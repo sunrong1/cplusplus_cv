@@ -8,8 +8,8 @@
 using namespace std;
 int _tmain(int argc, _TCHAR* argv[])
 {
-	//ofstream in("myname.txt");
-	ifstream out("myname.txt");//读文件
+	//ofstream out("myname.txt");
+	ifstream in("myname.txt");//读文件
 	//getchar()测试
 	//char c;
 	//c=getchar();
@@ -17,17 +17,17 @@ int _tmain(int argc, _TCHAR* argv[])
 	string line;
 	// getline(cin,line) 是一个系统函数，可以输入标准行内容,这个函数不会忽略任何内容一直读取用户输入并保存到line，
 	//直到用户输入换行函数才结束，结束时函数会返回cin的引用。 
-	while (getline(out,line))
+	while (getline(in,line))
 	{
 		cout<<line<<endl;
 	}
 	//ofstream()写文件测试
 	//for (int i=0;i<5;++i)
 	//{
-	//	in<<'a';
+	//	out<<'a';
 	//}
-	//in<<'b'<<endl;
-	//in<<"sunrong";
+	//out<<'b'<<endl;
+	//out<<"sunrong";
 	return 0;
 }
 
