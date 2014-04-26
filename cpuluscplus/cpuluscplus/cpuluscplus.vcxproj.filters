@@ -25,6 +25,9 @@
     <None Include="myname1.txt">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="result_ROC.txt">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

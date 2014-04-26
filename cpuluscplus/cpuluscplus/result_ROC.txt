@@ -1,0 +1,20 @@
+the thresholdScore is :0.33
+the notDetectRatio is:0.0802676 the FPPW is:-0.0147601
+the thresholdScore is :0.34
+the notDetectRatio is:0.0936455 the FPPW is:0
+the thresholdScore is :0.35
+the notDetectRatio is:0.107023 the FPPW is:0.0147601
+the thresholdScore is :0.36
+the notDetectRatio is:0.113712 the FPPW is:0.0221402
+the thresholdScore is :0.37
+the notDetectRatio is:0.117057 the FPPW is:0.0258303
+the thresholdScore is :0.38
+the notDetectRatio is:0.133779 the FPPW is:0.0442804
+the thresholdScore is :0.39
+the notDetectRatio is:0.147157 the FPPW is:0.0590406
+the thresholdScore is :0.4
+the notDetectRatio is:0.153846 the FPPW is:0.0664207
+the thresholdScore is :0.41
+the notDetectRatio is:0.170569 the FPPW is:0.0848708
+the thresholdScore is :0.42
+the notDetectRatio is:0.183946 the FPPW is:0.099631

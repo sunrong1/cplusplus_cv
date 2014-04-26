@@ -135,6 +135,7 @@
     <None Include="neg64.txt" />
     <None Include="ReadMe.txt" />
     <None Include="myname1.txt" />
+    <None Include="result_ROC.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
