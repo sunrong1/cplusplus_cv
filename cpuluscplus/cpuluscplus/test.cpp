@@ -15,112 +15,105 @@ float areaScore=0;
 Scalar color[3]={Scalar(255,0,0),Scalar(0,255,0),Scalar(0,0,255)};
 int main()
 {
-	ifstream in("myname.txt");
-	float num=0;
+	ifstream in_detect("myname.txt");
+	Rect rectDetec;
+	ifstream in_anno("myname1.txt");
+	Rect rectAnno;
+	Rect rectOverlap;
 	float acc[4];
-	vector<Rect> vecRectA;
-	vector<Rect> vecRectB;
-	Rect rectA;
-	Mat imgA=imread("tud0.png");
+	vector<Rect> vecRectDetec;
+	vector<Rect> vecrectAnno;
+
+	//Mat imgA=imread("tud0.png");
 	//Mat imgB=imread("tud0.png");
-	while (!in.eof())
+	while (!in_detect.eof())
 	{
-		for (int i=0;i<4;++i)
+		for (;;)
 		{
-			in>>acc[i];
-		}
-		//for (int i=0;i<4;++i)
-		//{
-		//	cout<<acc[i]<<",";
-		//}
-		//cout<<endl;
-		rectA=Rect(acc[0],acc[1],acc[2],acc[3]);
-		vecRectA.push_back(rectA);
-		//cout<<"rectA:"<<rectA<<endl;			
-	}
-	
-		
-	ifstream inB("myname1.txt");
-	Rect rectB;
-	while (!inB.eof())
-	{
-		for (int i=0;i<4;++i)
-		{
-			inB>>acc[i];
-		}
-		
-		int temp=0;
-		if (acc[2]-acc[0]<0)
-		{
-			if (acc[3]-acc[1]<0)
+			for (int i=0;i<4;++i)
 			{
-				temp=acc[0];
-				acc[0]=acc[2];
-				acc[2]=temp;
-				temp=acc[1];
-				acc[1]=acc[3];
-				acc[3]=temp;
+				in_detect>>acc[i];
+			}
+			if (acc[0]==0||in_detect.eof())
+			{
+				break;
+			}
+			rectDetec=Rect(acc[0],acc[1],acc[2],acc[3]);
+			vecRectDetec.push_back(rectDetec);
+			//cout<<"rectDetec:"<<rectDetec<<endl;
+		}
+		for (;;)
+		{
+			for (int i=0;i<4;++i)
+			{
+				in_anno>>acc[i];
+			}
+			if (acc[0]==0||in_anno.eof())
+			{
+				break;
+			}
+			int temp=0;
+			if (acc[2]-acc[0]<0)
+			{
+				if (acc[3]-acc[1]<0)
+				{
+					temp=acc[0];
+					acc[0]=acc[2];
+					acc[2]=temp;
+					temp=acc[1];
+					acc[1]=acc[3];
+					acc[3]=temp;
+				}
+				else
+				{
+					temp=acc[0];
+					acc[0]=acc[2];
+					acc[2]=temp;
+				}
 			}
 			else
-			{
-				temp=acc[0];
-				acc[0]=acc[2];
-				acc[2]=temp;
-			}
-		}
-		else
-			if (acc[3]-acc[1]<0)
-			{
-				temp=acc[1];
-				acc[1]=acc[3];
-				acc[3]=temp;
-			}
-		//for (int i=0;i<4;++i)
-		//{
-		//	cout<<acc[i]<<",";
-		//}
-		//cout<<endl;
-		acc[2]=acc[2]-acc[0];
-		acc[3]=acc[3]-acc[1];
-		//rectB(217,208,-55,143);//rect中允许有负值
-		rectB=Rect(acc[0],acc[1],acc[2],acc[3]);
-		vecRectB.push_back(rectB);
-		cout<<"rectB:"<<rectB<<endl;	
-	}
-	vetRectImageShow(vecRectA, imgA,color[1]);
-	vetRectImageShow(vecRectB, imgA,color[2]);
-	
-	Rect rectC;
-	for(int i=0;i<vecRectB.capacity();++i)
-	{
-		float area;
-		int score;
-		for(int detectnum=0;detectnum<vecRectA.capacity();++detectnum)
-		{
-			rectC=vecRectB.at(i) & vecRectA.at(detectnum);//"|"包含r1r2的最小矩形 opencv的bug，&重载是数值必须为正。
-			area=rectC.area();
-			
-			if (area>0)
-			{ 
-				areaScore=area/(vecRectB.at(i).area()+vecRectA.at(detectnum).area()-area);
-				if (areaScore>=0.5)
+				if (acc[3]-acc[1]<0)
 				{
-					rightDetectNum++;
-					cout<<"the area of overlap is :"<<area<<"and score is:"<<areaScore<<endl;
+					temp=acc[1];
+					acc[1]=acc[3];
+					acc[3]=temp;
 				}
-			}	
+				acc[2]=acc[2]-acc[0];
+				acc[3]=acc[3]-acc[1];
+				
+				rectAnno=Rect(acc[0],acc[1],acc[2],acc[3]);//rectAnno(217,208,-55,143);//rect中允许有负值
+				vecrectAnno.push_back(rectAnno);
+				
 		}
-	}
-	cout<<"the right detection number is:"<<rightDetectNum<<endl;
-    //rectC=vecRectA.at(0)& vecRectB.at(3);//"|"包含r1r2的最小矩形 opencv的bug，&重载是数值必须为正。
-	//Rect rectD=vecRectA.at(0)& vecRectB.at(3);//简单的方法，是对数据调整。
-	//cout<<rectC<<endl;
+		//vetRectImageShow(vecRectDetec, imgA,color[1]);
+		//vetRectImageShow(vecrectAnno, imgA,color[2]);
 
-	//rectangle(imgB,rectC.tl(),rectC.br(),Scalar(0,255,255),1);
-	
-//	rectangle(imgB,rectD.tl(),rectD.br(),Scalar(0,255,0),1);
-	imshow("tud0_bak",imgB);
-	imwrite("tud0_detect_my.png",imgA);
+		for(int i=0;i<vecrectAnno.size();++i)
+		{
+			float area;
+			int score;
+			for(int detectnum=0;detectnum<vecRectDetec.size();++detectnum)
+			{
+				rectOverlap=vecrectAnno.at(i) & vecRectDetec.at(detectnum);//"|"包含r1r2的最小矩形 opencv的bug，&重载是数值必须为正。
+				area=rectOverlap.area();
+
+				if (area>0)
+				{ 
+					areaScore=area/(vecrectAnno.at(i).area()+vecRectDetec.at(detectnum).area()-area);
+					if (areaScore>=0.5)
+					{
+						rightDetectNum++;
+						cout<<"the area of overlap is :"<<area<<"and score is:"<<areaScore<<endl;
+					}
+				}	
+			}
+		}
+		cout<<"the right detection number is:"<<rightDetectNum<<endl;
+		cout<<"the don't be detected number is:"<<vecrectAnno.size()-rightDetectNum<<endl;
+
+		waitKey();
+	}
+	cout<<"the don't be detected number is:"<<vecrectAnno.size()<<endl;
 	waitKey();
 	return 0;
 }
