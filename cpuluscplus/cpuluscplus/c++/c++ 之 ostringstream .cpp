@@ -1,12 +1,12 @@
 
-#include <sstream>
+#include <sstream> 
 #include <string>
 #include <iostream>
 using namespace std;
 
 void main()
 {
-	ostringstream ostr1; // 构造方式1
+	ostringstream ostr1; // 构造方式1 ostringstream :Output string stream
 	ostringstream ostr2("abc");	// 构造方式2
 
 	/*----------------------------------------------------------------------------
@@ -40,13 +40,3 @@ void main()
 	ostr2 << "gggghh";	// 覆盖原有的数据，并自动增加缓冲区
 	cout << ostr2.str() << endl;
 }
-//#include "Pedestrian.h"
-//using namespace std;
-//int main(int argc,char* argv[])
-//{
-//	//RunFiles();
-//	ostringstream ost;
-//	ost<<"ost1"<<2012<<endl;
-//	cout<<ost.str();
-//	return 0;
-//}

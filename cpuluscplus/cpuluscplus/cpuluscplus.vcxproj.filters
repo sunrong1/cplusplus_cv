@@ -22,7 +22,7 @@
     <None Include="neg64.txt">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="result.txt">
+    <None Include="myname1.txt">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

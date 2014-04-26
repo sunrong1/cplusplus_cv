@@ -263,7 +263,7 @@ int main()
 			rectangle(src, r.tl(), r.br(), Scalar(0,255,0),3);
 		}
 
-		imwrite("ImgProcessed.jpg",src);
+		//imwrite("ImgProcessed.jpg",src);
 		namedWindow("src",0);
 		imshow("src",src);
 		waitKey();//注意：imshow之后必须加waitKey，否则无法显示图像
