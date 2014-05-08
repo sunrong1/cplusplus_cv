@@ -8,32 +8,37 @@
 using namespace std;
 using namespace cv;
 void vetRectImageShow(vector<Rect> &vec, Mat &img,Scalar &color_rect);
-//int rightDetectNum=0;
-//int trueNegative=0;
+//int truePosDetectNum=0;
+//int falseNegDetectNum=0;
 //float notDetectRatio=0;//Â©¼ìÂÊ
 //float FPPW=0;
-//int falseDetectNum=0;
+//int falsePosDetectNum=0;
 //int overlapFlag=0;
 //float areaScore=0;
 //int positive=0;
-float thresholdScore=0.24;//0.34
+const long rectNum=207620;
+
+float thresholdScore=0.5;//0.34
 Scalar color[3]={Scalar(255,0,0),Scalar(0,255,0),Scalar(0,0,255)};
 int main()
 {
-	for (thresholdScore;thresholdScore<0.45;thresholdScore+=0.01)
-	{
-		int rightDetectNum=0;
-		int trueNegative=0;
+	//for (thresholdScore;thresholdScore<0.45;thresholdScore+=0.01)
+	//{
+		int truePosDetectNum=0;
+		int falseNegDetectNum=0;
+		int trueNegDetectNum=0;
 		float notDetectRatio=0;//Â©¼ìÂÊ
 		float FPPW=0;
-		int falseDetectNum=0;
+		float FPPI=0;
+		int falsePosDetectNum=0;
 		int overlapFlag=0;
 		float areaScore=0;
 		int positive=0;
+		int posDection=0;
 
 		ifstream in_detect("myname.txt");
 		Rect rectDetec;
-		ifstream in_anno("myname1.txt");
+		ifstream in_anno("HOG_anno.txt");
 		Rect rectAnno;
 		Rect rectOverlap;
 		float acc[4];
@@ -56,6 +61,7 @@ int main()
 				}
 				rectDetec=Rect(acc[0],acc[1],acc[2],acc[3]);
 				vecRectDetec.push_back(rectDetec);
+				posDection++;
 				//cout<<"rectDetec:"<<rectDetec<<endl;
 			}
 			for (;;)
@@ -120,7 +126,7 @@ int main()
 						if (areaScore>=thresholdScore)
 						{
 							thisImageDetectNum++;
-							rightDetectNum++;
+							truePosDetectNum++;
 							break;
 							//cout<<"the area of overlap is :"<<area<<"and score is:"<<areaScore<<endl;
 						}
@@ -129,7 +135,7 @@ int main()
 
 				//if (!overlapFlag)
 				//{
-				//	falseDetectNum++;
+				//	falsePosDetectNum++;
 				//}
 				//else overlapFlag=0;
 			}
@@ -150,38 +156,41 @@ int main()
 			//			if (areaScore>=thresholdScore)
 			//			{
 			//				thisImageDetectNum++;
-			//				rightDetectNum++;
+			//				truePosDetectNum++;
 			//				break;
 			//				//cout<<"the area of overlap is :"<<area<<"and score is:"<<areaScore<<endl;
 			//			}
 			//		}	
 			//	}
 			//}
-			trueNegative+=vecrectAnno.size()-thisImageDetectNum;
-			falseDetectNum+=vecRectDetec.size()-thisImageDetectNum;
-			cout<<"the right detection number is:"<<rightDetectNum<<endl;
-			cout<<"the don't be detected number is:"<<trueNegative<<endl;
-			cout<<"the false detected number is:"<<falseDetectNum<<endl;
+			falseNegDetectNum+=vecrectAnno.size()-thisImageDetectNum;
+			falsePosDetectNum+=vecRectDetec.size()-thisImageDetectNum;
+			cout<<"the true positive detection number is:"<<truePosDetectNum<<endl;
+			cout<<"the don't be detected number is:"<<falseNegDetectNum<<endl;
+			cout<<"the false positive detected number is:"<<falsePosDetectNum<<endl;
 			//vetRectImageShow(vecRectDetec, imgA,color[1]);
 			//vetRectImageShow(vecrectAnno, imgA,color[2]);
 			vecrectAnno.clear();
 			vecRectDetec.clear();
 			waitKey();
 		}
-		notDetectRatio=1-(float)rightDetectNum/positive;
-		FPPW=(float)falseDetectNum/(trueNegative+falseDetectNum);
+		notDetectRatio=1-(float)truePosDetectNum/positive;
+		trueNegDetectNum=(rectNum-posDection)-falseNegDetectNum;
+		//FPPW=(float)falsePosDetectNum/(trueNegDetectNum+falsePosDetectNum);
+		FPPI=falsePosDetectNum/288.0;
 		ofstream outf("result_ROC.txt",ios::app);
 
 		cout<<"the notDetectRatio is:"<<notDetectRatio<<" ";
-		cout<<"the FPPW is:"<<FPPW<<endl;
+		//cout<<"the FPPW is:"<<FPPW<<endl;
+		cout<<"the FPPI is:"<<FPPI<<endl;
 		//outf<<"the thresholdScore is :"<<thresholdScore<<endl;
 		//outf<<"the notDetectRatio is:"<<notDetectRatio<<" ";
 		//outf<<"the FPPW is:"<<FPPW<<endl;
 		//outf<<"the thresholdScore is :"<<thresholdScore<<endl;
-		outf<<FPPW<<" "<<notDetectRatio<<endl;
-		//cout<<"the false detected number is:"<<falseDetectNum<<endl;
-		
-	}
+		outf<<FPPI<<" "<<notDetectRatio<<endl;
+		//cout<<"the false detected number is:"<<falsePosDetectNum<<endl;
+
+	//}
 	waitKey();
 	return 0;
 }
